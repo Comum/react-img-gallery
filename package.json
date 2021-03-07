@@ -5,6 +5,9 @@
   "author": "Comum",
   "repository": "Comum/react-img-gallery",
   "main": "dist/index.js",
+  "publishConfig": {
+    "access": "restricted"
+  },
   "engines": {
     "node": ">=8",
     "npm": ">=5"
@@ -15,17 +18,18 @@
   },
   "dependencies": {},
   "peerDependencies": {
-    "react": ">= 17.0.0 < 2",
-    "react-dom": ">= 17.0.0 < 2"
+    "react": ">= 17.0.1 < 2",
+    "react-dom": ">= 17.0.1 < 2"
   },
   "devDependencies": {
-    "@types/react": "^16.3.13",
-    "@types/react-dom": "^16.0.5",
+    "@types/react": "^17.0.2",
+    "@types/react-dom": "^17.0.1",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
     "rollup": "^1.29.0",
+    "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.17",
     "rollup-plugin-sass": "^1.2.2",
     "rollup-plugin-typescript2": "^0.25.3",
     "typescript": "^2.8.3"

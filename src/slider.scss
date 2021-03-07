@@ -1,0 +1,28 @@
+.slider {
+  width: 400px;
+  height: 200px;
+
+  position: relative;
+
+  border: 1px solid black;
+}
+
+.button-container {
+  width: 50px;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.button-container-left {
+  left: 0;
+}
+
+.button-container-right {
+  right: 0;
+}
