@@ -2,6 +2,7 @@ import * as React from "react";
 import "./slider.scss";
 
 import { Button } from "./components/Button";
+import { Image, ImageViewer } from "./components/ImageViewer";
 
 interface SliderProps {
   className?: string;
@@ -67,7 +68,11 @@ const Slider: React.FC<SliderProps> = (props) => {
           onClick={decrementImage}
         />
       </div>
-      <div className="slider-content">{imageList[currentImage]}</div>
+      <ImageViewer currentImageIndex={currentImage}>
+        {imageList.map((image) => (
+          <Image source={image} />
+        ))}
+      </ImageViewer>
       <div className="button-container button-container-right">
         <Button
           orientation="right"
