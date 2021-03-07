@@ -33,8 +33,13 @@ const Button: React.FC<ButtonProps> = (props) => {
     onClick,
     ...remainingProps
   } = props;
-  const buttonClassList = `button ${className ? className : ""}`;
-  const arrowClassList = `arrow arrow-${orientation}`;
+  const buttonClassList = React.useMemo(
+    () => `button ${className ? className : ""}`,
+    [className]
+  );
+  const arrowClassList = React.useMemo(() => `arrow arrow-${orientation}`, [
+    orientation,
+  ]);
 
   return (
     <button

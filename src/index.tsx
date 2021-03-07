@@ -22,7 +22,12 @@ interface SliderProps {
 }
 
 const Slider: React.FC<SliderProps> = (props) => {
-  const { isInfinite = true, imageList, ...remainingProps } = props;
+  const {
+    isInfinite = true,
+    imageList = [],
+    className,
+    ...remainingProps
+  } = props;
   const [currentImage, setCurrentImage] = React.useState(isInfinite ? 1 : 0);
   const length = React.useMemo(() => imageList.length, [imageList]);
   const [incrementDisabled, setIncrementDisabled] = React.useState(
@@ -31,6 +36,10 @@ const Slider: React.FC<SliderProps> = (props) => {
   const [decrementDisabled, setDecrementDisabled] = React.useState(!isInfinite);
   // @ts-ignore
   const [isTransitionEnabled, setIsTransitionEnabled] = React.useState(true);
+  const classList = React.useMemo(
+    () => `slider ${className ? className : ""}`,
+    [className]
+  );
 
   const incrementImage = () => {
     let newValue = currentImage + 1;
@@ -64,7 +73,7 @@ const Slider: React.FC<SliderProps> = (props) => {
 
   React.useEffect(() => {
     if (isInfinite && !isTransitionEnabled) {
-        setIsTransitionEnabled(true);
+      setIsTransitionEnabled(true);
     }
   }, [currentImage, isInfinite, length]);
 
@@ -80,8 +89,8 @@ const Slider: React.FC<SliderProps> = (props) => {
     }
   };
 
-  return (
-    <div className="slider" {...remainingProps}>
+  return imageList.length === 0 ? null : (
+    <div className={classList} {...remainingProps}>
       <div className="button-container button-container-left">
         <Button
           orientation="left"

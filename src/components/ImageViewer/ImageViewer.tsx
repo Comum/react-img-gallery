@@ -31,7 +31,10 @@ interface ImageProps {
 
 const Image: React.FC<ImageProps> = (props) => {
   const { source, className, ...remainingProps } = props;
-  const classList = `image-preview ${className ? className : ""}`;
+  const classList = React.useMemo(
+    () => `image-preview ${className ? className : ""}`,
+    [className]
+  );
 
   return <img className={classList} src={source} {...remainingProps} />;
 };
