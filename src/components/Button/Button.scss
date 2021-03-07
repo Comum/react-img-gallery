@@ -20,6 +20,11 @@ button {
       border-color: grey;
     }
   }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .arrow {

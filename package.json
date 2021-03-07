@@ -1,7 +1,7 @@
 {
-  "name": "react-img-gallery",
+  "name": "react-img-gallery-by-comum",
   "version": "1.0.0",
-  "description": "An example solution for a image slider.",
+  "description": "An example for a image slider using react.",
   "author": "Comum",
   "repository": "Comum/react-img-gallery",
   "main": "dist/index.js",
