@@ -38,7 +38,7 @@ const Slider: React.FC<SliderProps> = (props) => {
     if (!isInfinite) {
       setIncrementDisabled(currentImage + 1 === length - 1);
     } else {
-      newValue = currentImage === length - 1 ? 0 : currentImage + 1;
+      newValue = currentImage === length + 1 ? 1 : currentImage + 1;
     }
 
     if (decrementDisabled) {
@@ -63,19 +63,17 @@ const Slider: React.FC<SliderProps> = (props) => {
   };
 
   React.useEffect(() => {
-    if (isInfinite) {
-      if (currentImage === 0 || currentImage === length) {
-        setIsTransitionEnabled(true)
-      }
+    if (isInfinite && !isTransitionEnabled) {
+        setIsTransitionEnabled(true);
     }
-  }, [currentImage, isInfinite, length])
+  }, [currentImage, isInfinite, length]);
 
   const handleTransitionEnd = () => {
     if (isInfinite) {
       if (currentImage === 0) {
         setIsTransitionEnabled(false);
         setCurrentImage(length);
-      } else if (currentImage === length) {
+      } else if (currentImage === length + 1) {
         setIsTransitionEnabled(false);
         setCurrentImage(1);
       }
