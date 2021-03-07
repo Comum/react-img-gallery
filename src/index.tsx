@@ -23,19 +23,22 @@ interface SliderProps {
 
 const Slider: React.FC<SliderProps> = (props) => {
   const { isInfinite = true, imageList, ...remainingProps } = props;
-  const [currentImage, setCurrentImage] = React.useState(0);
+  const [currentImage, setCurrentImage] = React.useState(isInfinite ? 1 : 0);
+  const length = React.useMemo(() => imageList.length, [imageList]);
   const [incrementDisabled, setIncrementDisabled] = React.useState(
-    isInfinite && imageList.length <= 1
+    isInfinite && length <= 1
   );
   const [decrementDisabled, setDecrementDisabled] = React.useState(!isInfinite);
+  // @ts-ignore
+  const [isTransitionEnabled, setIsTransitionEnabled] = React.useState(true);
 
   const incrementImage = () => {
     let newValue = currentImage + 1;
 
     if (!isInfinite) {
-      setIncrementDisabled(currentImage + 1 === imageList.length - 1);
+      setIncrementDisabled(currentImage + 1 === length - 1);
     } else {
-      newValue = currentImage === imageList.length - 1 ? 0 : currentImage + 1;
+      newValue = currentImage === length - 1 ? 0 : currentImage + 1;
     }
 
     if (decrementDisabled) {
@@ -50,13 +53,33 @@ const Slider: React.FC<SliderProps> = (props) => {
     if (!isInfinite) {
       setDecrementDisabled(currentImage - 1 === 0);
     } else {
-      newValue = currentImage === 0 ? imageList.length - 1 : currentImage - 1;
+      newValue = currentImage === 0 ? length - 1 : currentImage - 1;
     }
 
     if (incrementDisabled) {
       setIncrementDisabled(false);
     }
     setCurrentImage(newValue);
+  };
+
+  React.useEffect(() => {
+    if (isInfinite) {
+      if (currentImage === 0 || currentImage === length) {
+        setIsTransitionEnabled(true)
+      }
+    }
+  }, [currentImage, isInfinite, length])
+
+  const handleTransitionEnd = () => {
+    if (isInfinite) {
+      if (currentImage === 0) {
+        setIsTransitionEnabled(false);
+        setCurrentImage(length);
+      } else if (currentImage === length) {
+        setIsTransitionEnabled(false);
+        setCurrentImage(1);
+      }
+    }
   };
 
   return (
@@ -68,10 +91,16 @@ const Slider: React.FC<SliderProps> = (props) => {
           onClick={decrementImage}
         />
       </div>
-      <ImageViewer currentImageIndex={currentImage}>
-        {imageList.map((image) => (
-          <Image source={image} />
+      <ImageViewer
+        currentImageIndex={currentImage}
+        isTransitionEnabled={isTransitionEnabled}
+        onTransitionEnd={() => handleTransitionEnd()}
+      >
+        {isInfinite && <Image source={imageList[length - 1]} key={-1} />}
+        {imageList.map((image, index) => (
+          <Image source={image} key={index} />
         ))}
+        {isInfinite && <Image source={imageList[0]} key={length} />}
       </ImageViewer>
       <div className="button-container button-container-right">
         <Button
