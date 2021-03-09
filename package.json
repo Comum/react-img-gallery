@@ -5,9 +5,6 @@
   "author": "Comum",
   "repository": "Comum/react-img-gallery",
   "main": "dist/index.js",
-  "publishConfig": {
-    "access": "restricted"
-  },
   "engines": {
     "node": ">=8",
     "npm": ">=5"
